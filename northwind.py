@@ -38,6 +38,17 @@ print(f'The average age of an employee at the time of their hiring is {answer2[0
 
 # How does the average age of employee at hire vary by city?
 
+query = '''
+SELECT City, avg (HireDate - BirthDate) as City_average_hired_age
+    FROM Employee
+    GROUP BY City
+'''
+
+answer3 = cursor.execute(query).fetchall()
+print(' \n # How does the average age of employee at hire vary by city??')
+print(f'The average age of an employee hired by city {answer3}.')
+
+
 # part 3
 # What are the ten most expensive items (per unit price) in the database *and* their suppliers?
 
