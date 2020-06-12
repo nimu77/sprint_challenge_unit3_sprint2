@@ -44,7 +44,7 @@ print(f'The average age of an employee at the time of their hiring is {answer2[0
 query = '''
 SELECT p.ProductName, s.CompanyName, p.UnitPrice
     FROM Product p
-    Left JOIN Supplier s ON p.Id = s.Id
+    JOIN Supplier s ON p.SupplierId = s.Id
     ORDER BY p.UnitPrice DESC
     LIMIT 10
 '''
@@ -66,3 +66,18 @@ SELECT c.CategoryName, count (c.Id) as category_count
 answer5 = cursor.execute(query).fetchall()
 print(' \n # What is the largest category (by number of unique products in it)?')
 print(f'The largest category from top to bottom are: {answer5}')
+
+# Who's the employee with the most territories?
+
+query = '''
+SELECT et.EmployeeId, e.FirstName, e.LastName, count (et.TerritoryId) as territory_count
+    FROM Employee e
+    JOIN EmployeeTerritory et ON e.Id = et.EmployeeId
+    GROUP BY et.EmployeeId
+    ORDER BY territory_count DESC
+    LIMIT 1
+'''
+
+answer6 = cursor.execute(query).fetchall()
+print(' \n # Who"s the employee with the most territories?')
+print(f'The employee with most territories is: {answer6[0][1] + " " + answer6[0][2] + " " + "with" + " " + str(answer6[0][3])}')
